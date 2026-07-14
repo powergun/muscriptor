@@ -43,6 +43,19 @@ dependencies = [
     "soundfile>=0.14.0",
 ]
 
+# PyPI only publishes CPU-only torch wheels for Windows. Pull CUDA-enabled
+# builds from the official PyTorch index there; other platforms keep
+# resolving torch from PyPI (Linux PyPI wheels already include CUDA).
+[tool.uv.sources]
+torch = [
+    { index = "pytorch-cu128", marker = "sys_platform == 'win32'" },
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
+
 [project.urls]
 Homepage = "https://github.com/muscriptor/muscriptor"
 Repository = "https://github.com/muscriptor/muscriptor"
